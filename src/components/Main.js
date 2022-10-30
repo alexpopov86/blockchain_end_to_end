@@ -44,20 +44,31 @@ class Main extends Component {
                         </tr>
                     </thead>
                     <tbody id="productList">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>iPhone X</td>
-                            <td>1 Eth</td>
-                            <td>0x91aa39c3Fc5087d960fad8E406Ff438327269020</td>
-                            <td><button className='buyButton'>Buy</button></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>MacBook Pro</td>
-                            <td>3 Eth</td>
-                            <td>0xbC5219eEe4B7FbE23cF493F68471d15b7578f328</td>
-                            <td><button className='buyButton'>Buy</button></td>
-                        </tr>
+                        {this.props.products.map((product, key) => {
+                            return (
+                                <tr key={key}>
+                                    <th scope="row">{product.id.toString()}</th>
+                                    <td>{product.name}</td>
+                                    <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
+                                    <td>{product.owner}</td>
+                                    <td>
+                                        {
+                                            !product.purchased
+                                            ? <button
+                                                name={product.id}
+                                                value={product.price}
+                                                onClick={(event) => {
+                                                    this.props.purchaseProduct(event.target.name, event.target.value)
+                                                }}
+                                              >
+                                                Buy
+                                              </button>
+                                            : null
+                                        }
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>
