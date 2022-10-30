@@ -49,7 +49,7 @@ class App extends Component {
     this.setState({loading: true})
     this.state.marketplace.methods.createProduct(name, price)
       .send({from: this.state.account})
-      .once('receipt', (receipt) => {
+      .once('transactionHash', (transactionHash) => {
         this.setState({loading: false})
       })
   }
