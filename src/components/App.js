@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 import Navbar from './Navbar'
+import Marketplace from '../abis/Marketplace.json'
 import logo from '../logo.png';
 import './App.css';
 
@@ -26,6 +27,14 @@ class App extends Component {
     const accounts = await web3.eth.getAccounts()
     console.log(accounts)
     this.setState({ account: accounts[0] })
+    const networkId = await web3.eth.net.getId()
+    const networkData = Marketplace.networks[networkId]
+    if (networkData) {
+      const marketplace = web3.eth.Contract(Marketplace.abi, networkData.address)
+      console.log(marketplace)
+    } else {
+      window.alert('Marketplace contract not deployed to detected network.')
+    }
   }
 
   constructor(props) {
