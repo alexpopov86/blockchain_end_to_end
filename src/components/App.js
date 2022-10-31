@@ -60,7 +60,7 @@ class App extends Component {
       .send({
         from: this.state.account, value: price
       })
-      .once('receipt', (receipt) => {
+      .once('transactionHash', (transactionHash) => {
         this.setState({loading: false})
       })
   }
